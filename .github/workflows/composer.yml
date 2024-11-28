@@ -18,4 +18,4 @@ jobs:
       - name: Install Composer dependencies
         run: |
           composer install
-        working-directory: ./
+        working-directory: ${{ github.workspace }}
