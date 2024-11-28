@@ -1,18 +1,31 @@
-name: Ejecutar Script Bash Manualmente
+name: Instalar Dependencias de Composer
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  run-bash-script:
+
+  install-dependencies:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Ejecutar script Bash
-        run: |
-          # Aquí puedes agregar tus comandos Bash
-          echo "Ejecutando script Bash"
-          ./mi-script-bash.sh
+    - uses: actions/checkout@v2
+    
+    - name: Configurar PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4'
+        
+    - name: Instalar Composer
+      run: |
+        composer install --no-progress --no-suggest --prefer-dist
+      working-directory: ${{ github.workspace }}
+        
+    - name: Ejecutar script Bash
+      run: |
+        # Aquí puedes agregar tus comandos Bash
+        echo "Ejecutando script Bash"
+        ./mi-script-bash.sh
