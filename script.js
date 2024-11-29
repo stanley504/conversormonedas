@@ -6,7 +6,7 @@ function fetchCryptoData() {
     .then(data => {
       console.log("Respuesta de la API:", data); // Ver en consola los datos recibidos
       renderCryptoData(data); // Pasar los datos a la función que los renderiza
-      compra = data.compra;  // Guardar el valor de compra en una variable global
+      venta = data.venta;  // Guardar el valor de compra en una variable global
     })
     .catch(error => {
       console.error("Error al obtener los datos:", error);
