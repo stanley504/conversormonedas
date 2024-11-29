@@ -76,6 +76,20 @@ function convertirSolesAPesos() {
   }
 }
 
+// Código para habilitar el botón de modo oscuro
+const darkModeToggle = document.getElementById("darkModeToggle");
+
+// Detecta si ya está activado el modo oscuro en el navegador
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.body.classList.add("dark-mode");
+}
+
+// Agrega un evento al botón para alternar el modo oscuro
+darkModeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+});
+
+
 // Cargar la información automáticamente cuando la página se carga
 window.onload = function() {
   fetchCryptoData(); // Llamar la función para obtener los datos
