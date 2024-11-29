@@ -19,7 +19,12 @@ jobs:
       with:
         php-version: '7.4'
         
-    - name: Instalar Composer
+    - name: Instalar Dependencias de Composer
       run: |
         composer install --no-progress --no-suggest --prefer-dist
+      working-directory: ${{ github.workspace }}
+        
+    - name: Generar Composer Lock
+      run: |
+        composer lock
       working-directory: ${{ github.workspace }}
