@@ -55,6 +55,7 @@ button:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
+
 /* Posiciona el botón en la parte superior derecha */
 .dark-mode-btn:hover {
     background-color: #f0f0f0;
@@ -68,5 +69,29 @@ body.dark-mode {
 
 /* Ajusta los estilos de otros elementos en modo oscuro */
 body.dark-mode .container {
+    background-color: #1e1e1e;
     border-color: #ffffff;
+    color: #ffffff;
+}
+
+body.dark-mode .container h1,
+body.dark-mode .container h3,
+body.dark-mode .container label {
+    color: #ffffff;
+}
+
+body.dark-mode input {
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+}
+
+body.dark-mode button {
+    background-color: #444444;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+}
+
+body.dark-mode button:hover {
+    background-color: #555555;
 }
