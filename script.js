@@ -11,8 +11,7 @@ function fetchCryptoData() {
 }
 
 function renderCryptoData(data) {
-  const dataContainer = document.getElementById('dataContainer');
-  dataContainer.innerHTML = ''; // Limpiar contenido previo
+  const cryptoDataContainer = document.getElementById('cryptoDataContainer');
   
   // Acceder a los valores de la API
   const moneda = data.moneda;
@@ -22,7 +21,7 @@ function renderCryptoData(data) {
   const venta = data.venta;
   const fechaActualizacion = data.fechaActualizacion;
 
-  // Crear un string con los datos para mostrar
+  // Crear un string con los datos para mostrar (solo los datos cripto)
   const cryptoInfo = `
     <p><strong>Moneda:</strong> ${moneda}</p>
     <p><strong>Casa:</strong> ${casa}</p>
@@ -30,21 +29,17 @@ function renderCryptoData(data) {
     <p><strong>Compra:</strong> ${compra}</p>
     <p><strong>Venta:</strong> ${venta}</p>
     <p><strong>Última actualización:</strong> ${fechaActualizacion}</p>
-    <br>
-    <h3>Conversor de Soles a Pesos Argentinos</h3>
-    <label for="solesAmount">Cantidad en Soles:</label>
-    <input type="number" id="solesAmount" placeholder="Introduce la cantidad en soles">
-    <button onclick="convertirSolesAPesos(${compra})">Convertir</button>
-    <p id="resultadoConversor"></p>
   `;
 
-  // Mostrar los datos en el contenedor
-  dataContainer.innerHTML = cryptoInfo;
+  // Actualizar solo la parte de datos cripto
+  cryptoDataContainer.innerHTML = cryptoInfo;
 }
 
 // Función para convertir soles a pesos argentinos
-function convertirSolesAPesos(compra) {
+function convertirSolesAPesos() {
+  const compra = document.querySelector("#cryptoDataContainer p strong").nextElementSibling.textContent; // Extraemos el valor de compra del HTML
   const solesAmount = document.getElementById('solesAmount').value;
+  
   if (solesAmount) {
     const resultado = solesAmount * compra; // Conversión usando el valor de compra
     document.getElementById('resultadoConversor').innerText = 
