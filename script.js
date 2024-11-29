@@ -1,9 +1,12 @@
+let compra;  // Variable global para el valor de compra
+
 function fetchCryptoData() {
   fetch('https://dolarapi.com/v1/dolares/cripto')
     .then(response => response.json()) // Convertir la respuesta a JSON
     .then(data => {
       console.log("Respuesta de la API:", data); // Ver en consola los datos recibidos
       renderCryptoData(data); // Pasar los datos a la función que los renderiza
+      compra = data.compra;  // Guardar el valor de compra en una variable global
     })
     .catch(error => {
       console.error("Error al obtener los datos:", error);
@@ -37,15 +40,14 @@ function renderCryptoData(data) {
 
 // Función para convertir soles a pesos argentinos
 function convertirSolesAPesos() {
-  const compra = document.querySelector("#cryptoDataContainer p strong").nextElementSibling.textContent; // Extraemos el valor de compra del HTML
   const solesAmount = document.getElementById('solesAmount').value;
   
-  if (solesAmount) {
+  if (solesAmount && compra) {  // Verificar que solesAmount y compra estén definidos
     const resultado = solesAmount * compra; // Conversión usando el valor de compra
     document.getElementById('resultadoConversor').innerText = 
       `${solesAmount} Soles = ${resultado.toFixed(2)} Pesos Argentinos`;
   } else {
-    document.getElementById('resultadoConversor').innerText = "Por favor, ingresa una cantidad válida.";
+    document.getElementById('resultadoConversor').innerText = "Por favor, ingresa una cantidad válida y asegúrate de que los datos estén cargados.";
   }
 }
 
@@ -55,3 +57,4 @@ window.onload = function() {
   // Actualizar los datos cada 30 segundos (30000 ms)
   setInterval(fetchCryptoData, 30000);
 };
+
