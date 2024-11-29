@@ -1,37 +1,37 @@
 function fetchCryptoData() {
-    console.log("El botón fue presionado.");
-
-    fetch('https://dolarapi.com/v1/dolares/cripto') // Llamada a la API
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json(); // Usamos .json() directamente ya que la API devuelve JSON
-        })
-        .then(data => {
-            console.log("Respuesta de la API:", data); // Verifica la respuesta de la API
-            renderCryptoData(data); // Pasamos el objeto completo a renderCryptoData
-        })
-        .catch(error => {
-            console.error("Error al obtener los datos:", error);
-            document.getElementById("dataContainer").innerHTML = 
-                "<p>Error al cargar los datos. Intenta de nuevo.</p>";
-        });
+  fetch('https://dolarapi.com/v1/dolares/cripto')
+    .then(response => response.json()) // Convertir la respuesta a JSON
+    .then(data => {
+      console.log("Respuesta de la API:", data); // Ver en consola los datos recibidos
+      renderCryptoData(data); // Pasar los datos a la función que los renderiza
+    })
+    .catch(error => {
+      console.error("Error al obtener los datos:", error);
+    });
 }
 
 function renderCryptoData(data) {
-    const container = document.getElementById("dataContainer");
-    container.innerHTML = ""; // Limpia el contenedor antes de agregar nuevos datos
+  const dataContainer = document.getElementById('dataContainer');
+  dataContainer.innerHTML = ''; // Limpiar contenido previo
+  
+  // Aquí ya que no es un array, podemos acceder directamente a las propiedades del objeto
+  const moneda = data.moneda;
+  const casa = data.casa;
+  const nombre = data.nombre;
+  const compra = data.compra;
+  const venta = data.venta;
+  const fechaActualizacion = data.fechaActualizacion;
 
-    // Aquí accedemos directamente a las propiedades del objeto 'data'
-    const div = document.createElement("div");
-    div.innerHTML = `
-        <p><strong>Moneda:</strong> ${data.moneda}</p>
-        <p><strong>Casa:</strong> ${data.casa}</p>
-        <p><strong>Nombre:</strong> ${data.nombre}</p>
-        <p><strong>Compra:</strong> $${data.compra}</p>
-        <p><strong>Venta:</strong> $${data.venta}</p>
-        <p><strong>Última actualización:</strong> ${data.fechaActualizacion}</p>
-    `;
-    container.appendChild(div); // Agrega la nueva información al contenedor
+  // Crear un string con los datos para mostrar
+  const cryptoInfo = `
+    <p><strong>Moneda:</strong> ${moneda}</p>
+    <p><strong>Casa:</strong> ${casa}</p>
+    <p><strong>Nombre:</strong> ${nombre}</p>
+    <p><strong>Compra:</strong> ${compra}</p>
+    <p><strong>Venta:</strong> ${venta}</p>
+    <p><strong>Última actualización:</strong> ${fechaActualizacion}</p>
+  `;
+
+  // Mostrar los datos en el contenedor
+  dataContainer.innerHTML = cryptoInfo;
 }
