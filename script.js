@@ -1,51 +1,28 @@
-async function fetchData() {
-    const dataContainer = document.getElementById('dataContainer');
-    dataContainer.innerHTML = "Cargando datos...";
-
-    // Datos de prueba
-    const payload = {
-        asset: 'USDT',
-        fiat: 'VND',
-        tradeType: 'BUY'
-    };
-
-    try {
-        const response = await fetch('api.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload),
+function fetchCryptoData() {
+    fetch('https://dolarapi.com/v1/dolares/cripto') // Llamada a la API
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json(); // Convierte la respuesta en JSON
+        })
+        .then(data => {
+            renderCryptoData(data); // Llama a una función para mostrar los datos
+        })
+        .catch(error => {
+            console.error("Error al obtener datos:", error);
+            document.getElementById("dataContainer").innerHTML = 
+                "<p>Error al cargar los datos. Intenta de nuevo.</p>";
         });
-
-        const result = await response.json();
-
-        if (response.ok) {
-            displayData(result);
-        } else {
-            dataContainer.innerHTML = `<p>Error: ${result.message}</p>`;
-        }
-    } catch (error) {
-        dataContainer.innerHTML = `<p>Error: ${error.message}</p>`;
-    }
 }
 
-function displayData(data) {
-    const dataContainer = document.getElementById('dataContainer');
-    if (!data.length) {
-        dataContainer.innerHTML = '<p>No se encontraron datos.</p>';
-        return;
-    }
+function renderCryptoData(data) {
+    const container = document.getElementById("dataContainer");
+    container.innerHTML = ""; // Limpia el contenedor antes de agregar nuevos datos
 
-    let html = '<table border="1"><tr><th>Precio</th><th>Mínimo</th><th>Máximo</th><th>Usuario</th></tr>';
-    data.forEach(item => {
-        html += `<tr>
-            <td>${item.price}</td>
-            <td>${item.minSingleTransAmount}</td>
-            <td>${item.dynamicMaxSingleTransAmount}</td>
-            <td>${item.nickName}</td>
-        </tr>`;
+    data.forEach(cripto => {
+        const div = document.createElement("div");
+        div.innerHTML = `<strong>${cripto.nombre}:</strong> $${cripto.precio}`;
+        container.appendChild(div);
     });
-    html += '</table>';
-    dataContainer.innerHTML = html;
 }
