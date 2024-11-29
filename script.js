@@ -13,6 +13,31 @@ function fetchCryptoData() {
     });
 }
 
+function obtenerTipoCambioSunat() {
+  // Datos
+  const token = 'apis-token-1.aTSI1U7KEuT-6bbbCguH-4Y8TI6KS73N';
+
+  // Obtener la fecha actual en formato YYYY-MM-DD
+  const hoy = new Date();
+  const fecha = hoy.toISOString().split('T')[0]; // Convierte la fecha a "YYYY-MM-DD"
+
+  // Realizar la llamada a la API
+  fetch(`https://api.apis.net.pe/v2/sunat/tipo-cambio?date=${fecha}`, {
+    method: 'GET',  // Método GET
+    headers: {
+      'Referer': 'https://apis.net.pe/tipo-de-cambio-sunat-api', // Referer, como en el PHP
+      'Authorization': 'Bearer ' + token,  // Token de autorización
+    },
+  })
+  .then(response => response.json())  // Convertir la respuesta a JSON
+  .then(data => {
+    console.log(data);  // Datos que devuelve la API
+  })
+  .catch(error => {
+    console.error('Error al obtener los datos:', error);  // Manejo de errores
+  });
+}
+
 function renderCryptoData(data) {
   const cryptoDataContainer = document.getElementById('cryptoDataContainer');
   
@@ -56,5 +81,7 @@ window.onload = function() {
   fetchCryptoData(); // Llamar la función para obtener los datos
   // Actualizar los datos cada 30 segundos (30000 ms)
   setInterval(fetchCryptoData, 30000);
+  // Llamar a la función para obtener el tipo de cambio
+  obtenerTipoCambioSunat();
 };
 
