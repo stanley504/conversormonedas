@@ -45,6 +45,9 @@ button:hover {
     position: fixed;
     top: 10px;
     right: 10px;
+    display: flex; /* Activa flexbox */
+    align-items: center; /* Centrado vertical */
+    justify-content: center; /* Centrado horizontal */
     background-color: #fff;
     border: none;
     border-radius: 50%;
