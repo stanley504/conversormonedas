@@ -14,28 +14,20 @@ function fetchCryptoData() {
 }
 
 function obtenerTipoCambioSunat() {
-  // Datos
-  const token = 'apis-token-1.aTSI1U7KEuT-6bbbCguH-4Y8TI6KS73N';
-
-  // Obtener la fecha actual en formato YYYY-MM-DD
-  const hoy = new Date();
-  const fecha = hoy.toISOString().split('T')[0]; // Convierte la fecha a "YYYY-MM-DD"
-
-  // Realizar la llamada a la API
-  fetch(`https://api.apis.net.pe/v2/sunat/tipo-cambio?date=${fecha}`, {
-    method: 'GET',  // Método GET
+  fetch('https://cors-anywhere.herokuapp.com/https://api.apis.net.pe/v2/sunat/tipo-cambio?date=2024-11-29', {
+    method: 'GET',
     headers: {
-      'Referer': 'https://apis.net.pe/tipo-de-cambio-sunat-api', // Referer, como en el PHP
-      'Authorization': 'Bearer ' + token,  // Token de autorización
+      'Referer': 'https://apis.net.pe/tipo-de-cambio-sunat-api',
+      'Authorization': 'Bearer apis-token-1.aTSI1U7KEuT-6bbbCguH-4Y8TI6KS73N',
     },
   })
-  .then(response => response.json())  // Convertir la respuesta a JSON
-  .then(data => {
-    console.log(data);  // Datos que devuelve la API
-  })
-  .catch(error => {
-    console.error('Error al obtener los datos:', error);  // Manejo de errores
-  });
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);  // Datos que devuelve la API
+    })
+    .catch(error => {
+      console.error('Error al obtener los datos:', error);
+    });
 }
 
 function renderCryptoData(data) {
