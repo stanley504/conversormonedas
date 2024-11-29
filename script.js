@@ -1,4 +1,4 @@
-let compra;  // Variable global para el valor de compra
+let venta;  // Variable global para el valor de venta
 
 function fetchCryptoData() {
   fetch('https://dolarapi.com/v1/dolares/cripto')
@@ -10,23 +10,6 @@ function fetchCryptoData() {
     })
     .catch(error => {
       console.error("Error al obtener los datos:", error);
-    });
-}
-
-function obtenerTipoCambioSunat() {
-  fetch('https://cors-anywhere.herokuapp.com/https://api.apis.net.pe/v2/sunat/tipo-cambio?date=2024-11-29', {
-    method: 'GET',
-    headers: {
-      'Referer': 'https://apis.net.pe/tipo-de-cambio-sunat-api',
-      'Authorization': 'Bearer apis-token-1.aTSI1U7KEuT-6bbbCguH-4Y8TI6KS73N',
-    },
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);  // Datos que devuelve la API
-    })
-    .catch(error => {
-      console.error('Error al obtener los datos:', error);
     });
 }
 
@@ -59,8 +42,8 @@ function renderCryptoData(data) {
 function convertirSolesAPesos() {
   const solesAmount = document.getElementById('solesAmount').value;
   
-  if (solesAmount && compra) {  // Verificar que solesAmount y compra estén definidos
-    const resultado = solesAmount * compra; // Conversión usando el valor de compra
+  if (solesAmount && venta) {  // Verificar que solesAmount y compra estén definidos
+    const resultado = (solesAmount / 3.78) * venta; // Conversión usando el valor de compra
     document.getElementById('resultadoConversor').innerText = 
       `${solesAmount} Soles = ${resultado.toFixed(2)} Pesos Argentinos`;
   } else {
@@ -87,7 +70,5 @@ window.onload = function() {
   fetchCryptoData(); // Llamar la función para obtener los datos
   // Actualizar los datos cada 30 segundos (30000 ms)
   setInterval(fetchCryptoData, 30000);
-  // Llamar a la función para obtener el tipo de cambio
-  obtenerTipoCambioSunat();
 };
 
