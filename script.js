@@ -38,18 +38,41 @@ function renderCryptoData(data) {
   cryptoDataContainer.innerHTML = cryptoInfo;
 }
 
+
+
+const solesAmount = document.getElementById('solesAmount');
+
 // Función para convertir soles a pesos argentinos
 function convertirSolesAPesos() {
-  const solesAmount = document.getElementById('solesAmount').value;
   
-  if (solesAmount && venta) {  // Verificar que solesAmount y compra estén definidos
-    const resultado = (solesAmount / 3.78) * venta; // Conversión usando el valor de compra
+  if (solesAmount.value && venta) {  // Verificar que solesAmount y compra estén definidos
+    const resultado = (solesAmount.value / 3.78) * venta; 
     document.getElementById('resultadoConversor').innerText = 
-      `${solesAmount} Soles = ${resultado.toFixed(2)} Pesos Argentinos`;
+      `${solesAmount.value} Soles = ${resultado.toFixed(2)} Pesos Argentinos`;
   } else {
     document.getElementById('resultadoConversor').innerText = "Por favor, ingresa una cantidad válida y asegúrate de que los datos estén cargados.";
   }
 }
+
+solesAmount.addEventListener('input', convertirSolesAPesos);
+
+const pesosAmount = document.getElementById('pesosAmount');
+
+// Función para convertir soles a pesos argentinos
+function convertirPesosaSoles() {
+  
+  if (pesosAmount.value && venta) { 
+
+    const resultado = (pesosAmount.value / venta) * 3.78; 
+    document.getElementById('pesosConversor').innerText = 
+      `${pesosAmount.value} Pesos = ${resultado.toFixed(2)} Soles Argentinos`;
+  } else {
+    document.getElementById('pesosConversor').innerText = "Por favor, ingresa una cantidad válida y asegúrate de que los datos estén cargados.";
+  }
+}
+
+pesosAmount.addEventListener('input', convertirPesosaSoles);
+
 
 // Código para habilitar el botón de modo oscuro
 const darkModeToggle = document.getElementById("darkModeToggle");
